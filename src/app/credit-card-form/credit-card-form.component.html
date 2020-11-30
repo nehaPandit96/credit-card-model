@@ -1,0 +1,58 @@
+<div class='py-3 d-flex justify-content-center'>
+    <form [formGroup]='creditCardForm' (submit)="submitForm()">
+        <h4>Enter credit card details</h4>
+        <div>
+            <span class='d-block text-danger'
+                *ngIf='formInvalid && creditCardForm.controls.creditCardNumber.status === "INVALID"'>Enter
+                valid Number</span>
+            <mat-form-field appearance="outline">
+                <mat-label>Credit Card Number</mat-label>
+                <input id='cardNumber' formControlName='creditCardNumber' matInput required
+                    placeholder="Enter Valid Credit Card Number">
+            </mat-form-field>
+        </div>
+        <div>
+            <span class='d-block text-danger'
+                *ngIf='formInvalid && creditCardForm.controls.creditCardHolder.status === "INVALID"'>Enter
+                valid Name</span>
+            <mat-form-field appearance="outline">
+                <mat-label>Credit Holder Name</mat-label>
+                <input pattern='^[a-zA-Z ]*$' formControlName='creditCardHolder' matInput required
+                    placeholder="Enter Valid Credit Holder Name">
+            </mat-form-field>
+        </div>
+        <div>
+            <span class='d-block text-danger'
+                *ngIf='formInvalid && creditCardForm.controls.securityCode.status === "INVALID"'>Enter
+                3-digit valid Security Code</span>
+            <mat-form-field appearance="outline">
+                <mat-label>Security Code(CCV)</mat-label>
+                <input pattern='^[0-9]{3}$' formControlName='securityCode' matInput
+                    placeholder="Enter Valid Security Code">
+            </mat-form-field>
+        </div>
+        <div>
+            <span class='d-block text-danger'
+                *ngIf='formInvalid && creditCardForm.controls.amount.status === "INVALID"'>Amount
+                should
+                be greater than 0</span>
+            <mat-form-field appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input pattern='^[1-9][0-9]*' formControlName='amount' matInput required placeholder="Enter Amount">
+            </mat-form-field>
+        </div>
+        <div>
+            <span class='d-block text-danger' *ngIf='formInvalid && !dateValidation'>Date should be greater than current
+                Date</span>
+            <mat-form-field appearance="fill">
+                <mat-label>Month and Year</mat-label>
+                <input formControlName='date' matInput [matDatepicker]="dp">
+                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+                    (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)='submitForm()'>Submit</button>
+    </form>
+</div>
